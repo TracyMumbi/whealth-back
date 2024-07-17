@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Otps</h1>
+
+<div id="otps">
+  <% @otps.each do |otp| %>
+    <%= render otp %>
+    <p>
+      <%= link_to "Show this otp", otp %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New otp", new_otp_path %>

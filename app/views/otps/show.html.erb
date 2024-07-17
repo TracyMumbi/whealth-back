@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @otp %>
+
+<div>
+  <%= link_to "Edit this otp", edit_otp_path(@otp) %> |
+  <%= link_to "Back to otps", otps_path %>
+
+  <%= button_to "Destroy this otp", @otp, method: :delete %>
+</div>
