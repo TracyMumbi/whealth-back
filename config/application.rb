@@ -1,6 +1,9 @@
 require_relative "boot"
 
 require "rails/all"
+# config/application.rb or relevant file
+require 'jwt'
+
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
