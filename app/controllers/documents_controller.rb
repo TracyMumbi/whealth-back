@@ -8,9 +8,17 @@ class DocumentsController < ApplicationController
   end
 
   # GET /documents/1 or /documents/1.json
-  def show
-    render json: document_attributes(@document)
+# Example in Rails controller
+def show
+  document = Document.find(params[:id])
+  respond_to do |format|
+    format.pdf do
+      pdf = render_to_string pdf: "document_#{document.id}", template: "documents/show.pdf.erb", layout: "pdf.html.erb"
+      send_data pdf, filename: "document_#{document.id}.pdf", type: 'application/pdf', disposition: 'inline'
+    end
   end
+end
+
 
   # POST /documents or /documents.json
   def create
