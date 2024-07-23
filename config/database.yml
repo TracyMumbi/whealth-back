@@ -21,8 +21,5 @@ production:
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  url: <%= ENV["DATABASE_URL"] %>
-  database: <%= ENV['PG_DATABASE'] || 'your_database_name_production' %>
-  username: <%= ENV['PG_USERNAME'] %>
-  password: <%= ENV['PG_PASSWORD'] %>
-  host: <%= ENV['PG_HOST'] || 'localhost' %>
+  url: <%= ENV['DATABASE_URL'] %>
+
