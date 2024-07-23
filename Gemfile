@@ -58,7 +58,7 @@ gem "bootsnap", require: false
 
 gem "base64"
 
-gem "excon"
+gem 'excon', '0.111.0'
 
 gem "json"
 

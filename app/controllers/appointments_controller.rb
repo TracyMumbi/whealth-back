@@ -12,17 +12,24 @@ class AppointmentsController < ApplicationController
     render json: @appointment, scope: { params: params }
   end
 
-  # POST /appointments or /appointments.json
-  def create
-    @appointment = Appointment.new(appointment_params)
+  # # POST /appointments or /appointments.json
+  # def create
+  #   @appointment = Appointment.new(appointment_params)
 
-    if @appointment.save
-      render json: { 
-        appointment: AppointmentSerializer.new(@appointment, scope: { params: params }) 
-      }, scope: { params: params }, status: :created
-    else
-      render json: @appointment.errors, status: :unprocessable_entity
-    end
+  #   if @appointment.save
+  #     render json: { 
+  #       appointment: AppointmentSerializer.new(@appointment, scope: { params: params }) 
+  #     }, scope: { params: params }, status: :created
+  #   else
+  #     render json: @appointment.errors, status: :unprocessable_entity
+  #   end
+  # end
+
+  def create
+    @appointment = Appointment.create!(appointment_params)
+    render json: { 
+            appointment: AppointmentSerializer.new(@appointment, scope: { params: params }) 
+          }, scope: { params: params }, status: :created
   end
 
   # PATCH/PUT /appointments/1 or /appointments/1.json
@@ -50,6 +57,6 @@ class AppointmentsController < ApplicationController
   end
 
   def appointment_params
-    params.require(:appointment).permit(:title, :body)
+    params.require(:appointment).permit(:title, :body, :date, :project_id)
   end
 end

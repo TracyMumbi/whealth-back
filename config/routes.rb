@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :quills
   resources :projects
   resources :documents
   resources :appointments

@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Quills</h1>
+
+<div id="quills">
+  <% @quills.each do |quill| %>
+    <%= render quill %>
+    <p>
+      <%= link_to "Show this quill", quill %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New quill", new_quill_path %>

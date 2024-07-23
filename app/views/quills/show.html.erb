@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @quill %>
+
+<div>
+  <%= link_to "Edit this quill", edit_quill_path(@quill) %> |
+  <%= link_to "Back to quills", quills_path %>
+
+  <%= button_to "Destroy this quill", @quill, method: :delete %>
+</div>

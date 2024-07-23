@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_15_195645) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_23_100234) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -42,8 +42,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_195645) do
   create_table "appointments", force: :cascade do |t|
     t.string "title"
     t.text "body"
+    t.string "date"
+    t.integer "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_appointments_on_project_id"
   end
 
   create_table "consultants", force: :cascade do |t|
@@ -80,9 +83,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_195645) do
     t.integer "user_id", null: false
     t.string "name"
     t.string "status"
+    t.integer "consultant_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["consultant_id"], name: "index_projects_on_consultant_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "quills", force: :cascade do |t|
+    t.text "content"
+    t.integer "project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_quills_on_project_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -101,6 +114,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_195645) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "appointments", "projects"
   add_foreign_key "otps", "users"
+  add_foreign_key "projects", "consultants"
   add_foreign_key "projects", "users"
+  add_foreign_key "quills", "projects"
 end
