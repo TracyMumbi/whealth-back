@@ -6,6 +6,7 @@ class CreateConsultants < ActiveRecord::Migration[7.1]
       t.string :gender
       t.string :date_of_birth
       t.string :email
+      t.string :username
       t.string :password
       t.string :speciality
       t.string :board_number

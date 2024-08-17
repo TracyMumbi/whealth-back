@@ -1,5 +1,6 @@
 class ConsultantsController < ApplicationController
   before_action :set_consultant, only: %i[show edit update destroy]
+  skip_before_action :authorize_request, only: %i[ create ]
 
   # GET /consultants or /consultants.json
   def index
@@ -13,16 +14,28 @@ class ConsultantsController < ApplicationController
   end
 
   # POST /consultants or /consultants.json
+  # def create
+  #   @consultant = Consultant.new(consultant_params)
+
+  #   if @consultant.save
+  #     render json: @consultant, status: :created, location: @consultant
+  #   else
+  #     render json: @consultant.errors, status: :unprocessable_entity
+  #   end
+  # end
   def create
     @consultant = Consultant.new(consultant_params)
+    @consultant.password = params[:password]
+
 
     if @consultant.save
-      render json: @consultant, status: :created, location: @consultant
+      render json: { 
+        consultant: ConsultantSerializer.new(@consultant, scope: { params: params }) 
+      }, scope: { params: params }, status: :created
     else
       render json: @consultant.errors, status: :unprocessable_entity
     end
   end
-
   # PATCH/PUT /consultants/1 or /consultants/1.json
   def update
     if @consultant.update(consultant_params)
@@ -48,6 +61,6 @@ class ConsultantsController < ApplicationController
   end
 
   def consultant_params
-    params.require(:consultant).permit(:name, :phone, :gender, :date_of_birth, :email, :password, :speciality, :board_number, :experience, :is_client, :is_consultant)
+    params.require(:consultant).permit(:name, :phone, :gender, :date_of_birth, :email, :username, :password, :speciality, :board_number, :experience, :is_client, :is_consultant)
   end
 end

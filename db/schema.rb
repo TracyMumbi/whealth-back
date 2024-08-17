@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_23_100234) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_09_121832) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,6 +46,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_100234) do
     t.integer "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status"
     t.index ["project_id"], name: "index_appointments_on_project_id"
   end
 
@@ -55,7 +56,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_100234) do
     t.string "gender"
     t.string "date_of_birth"
     t.string "email"
-    t.string "password"
+    t.string "username"
+    t.string "password_digest"
     t.string "speciality"
     t.string "board_number"
     t.integer "experience"
@@ -71,6 +73,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_100234) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "message"
+    t.integer "appointment_id_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id_id"], name: "index_notifications_on_appointment_id_id"
+  end
+
   create_table "otps", force: :cascade do |t|
     t.string "otp_no"
     t.integer "user_id", null: false
@@ -80,12 +90,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_100234) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.string "name"
     t.string "status"
-    t.integer "consultant_id", null: false
+    t.integer "consultant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "body"
     t.index ["consultant_id"], name: "index_projects_on_consultant_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -102,7 +113,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_100234) do
     t.string "name"
     t.string "email"
     t.string "phone"
-    t.string "password"
+    t.string "password_digest"
     t.string "gender"
     t.string "date_of_birth"
     t.string "username"
@@ -115,6 +126,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_100234) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointments", "projects"
+  add_foreign_key "notifications", "appointment_ids"
   add_foreign_key "otps", "users"
   add_foreign_key "projects", "consultants"
   add_foreign_key "projects", "users"

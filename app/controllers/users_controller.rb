@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
+  skip_before_action :authorize_request, only: %i[ create ]
 
   # GET /users or /users.json
   def index
@@ -50,10 +51,7 @@ class UsersController < ApplicationController
       render json: @user.errors, status: :unprocessable_entity
     end
   end
-  def login 
-    @user = User.find_by(email: params[:email])
-      render json: @user
-  end
+
 
   # PATCH/PUT /users/1 or /users/1.json
   def update

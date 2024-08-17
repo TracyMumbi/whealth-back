@@ -4,6 +4,7 @@ class QuillsController < ApplicationController
   # GET /quills or /quills.json
   def index
     @quills = Quill.all
+    render json: @quills
   end
 
   # GET /quills/1 or /quills/1.json

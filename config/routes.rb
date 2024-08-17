@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :notifications
   resources :quills
   resources :projects
   resources :documents
@@ -9,8 +10,9 @@ Rails.application.routes.draw do
   post "/confirm-otp", to: "otps#confirm_otp"
   post '/reset_password', to: 'users#reset_password'
   post '/forgot_password', to: 'users#forgot_password'
-  post '/login', to: 'users#login'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  post "/login", to: "sessions#create"
+  get "/all-projects", to: "projects#all"
+  get '/projects/:project_id/appointments', to: 'appointments#index'  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
@@ -18,4 +20,18 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  mount ActionCable.server => '/cable', constraints: -> (request) {
+    user_role = request.headers['Role']
+
+    case user_role
+    when 'Consultant'
+      ConsultantChannel
+    when 'User'
+      UsersChannel
+    end
+    
+    channel_class || ActionCable.server.config.cable[:channel_class].reject_unauthorized_connection
+  }
+
 end
