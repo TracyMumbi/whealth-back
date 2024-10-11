@@ -114,7 +114,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :password, :gender, :date_of_birth, :username, :is_client, :is_consultant)
+    params.require(:user).permit(:name, :email, :phone, :password, :subscription_status, :gender, :date_of_birth, :username, :is_client, :is_consultant)
   end
 
   def generate_and_send_otp(user)

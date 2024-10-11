@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Growths</h1>
+
+<div id="growths">
+  <% @growths.each do |growth| %>
+    <%= render growth %>
+    <p>
+      <%= link_to "Show this growth", growth %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New growth", new_growth_path %>

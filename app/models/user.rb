@@ -3,6 +3,7 @@ class User < ApplicationRecord
     has_many :otps, dependent: :destroy
     has_many :projects, dependent: :destroy
     validates :email, uniqueness: true
+    attribute :subscription_status, :boolean, default: false
     
     validates :phone, presence: true
     def generate_jwt

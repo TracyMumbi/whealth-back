@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :growths
+  resources :transactions, only: [:show, :create, :index] do
+    member do
+      get 'query', action: :query
+    end
+  end
+  resources :payments
   resources :notifications
   resources :quills
   resources :projects
@@ -12,6 +19,7 @@ Rails.application.routes.draw do
   post '/forgot_password', to: 'users#forgot_password'
   post "/login", to: "sessions#create"
   get "/all-projects", to: "projects#all"
+  post '/stk_push', to: 'payments#stk_push'
   get '/projects/:project_id/appointments', to: 'appointments#index'  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

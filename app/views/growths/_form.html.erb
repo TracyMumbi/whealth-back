@@ -1,0 +1,42 @@
+<%= form_with(model: growth) do |form| %>
+  <% if growth.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(growth.errors.count, "error") %> prohibited this growth from being saved:</h2>
+
+      <ul>
+        <% growth.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :weight, style: "display: block" %>
+    <%= form.text_field :weight %>
+  </div>
+
+  <div>
+    <%= form.label :height, style: "display: block" %>
+    <%= form.text_field :height %>
+  </div>
+
+  <div>
+    <%= form.label :age, style: "display: block" %>
+    <%= form.number_field :age %>
+  </div>
+
+  <div>
+    <%= form.label :length, style: "display: block" %>
+    <%= form.text_field :length %>
+  </div>
+
+  <div>
+    <%= form.label :head_circumference, style: "display: block" %>
+    <%= form.number_field :head_circumference %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
