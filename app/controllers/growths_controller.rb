@@ -75,6 +75,6 @@ class GrowthsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def growth_params
-    params.require(:growth).permit(:weight, :height, :age, :length, :head_circumference)
+    params.require(:growth).permit(:weight, :height, :age, :user_id, :length, :head_circumference)
   end
 end
