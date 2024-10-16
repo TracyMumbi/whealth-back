@@ -3,23 +3,20 @@ class GrowthsController < ApplicationController
 
   # GET /growths or /growths.json
   def index
-    sort_column = params[:sort_column] || 'created_at' # Default to 'created_at' if not provided
-    sort_direction = params[:sort_direction] || 'desc' # Default to 'desc' if not provided
+    sort_column = params[:sort_column] || 'created_at'
+    sort_direction = params[:sort_direction] || 'desc'
     search_query = params[:search] || ''
     start_date = params[:start_date] || Date.new(1900, 1, 1)
     end_date = params[:end_date] || Date.current
 
-    # Validate the sort direction to prevent SQL injection
     sort_direction = %w[asc desc].include?(sort_direction) ? sort_direction : 'desc'
 
-    # Fetch and filter growths based on the search, date range, and sort parameters
     @growths = Growth
                 .where("weight LIKE :query OR height LIKE :query OR age LIKE :query OR length LIKE :query OR head_circumference LIKE :query", query: "%#{search_query}%")
                 .where(created_at: start_date.beginning_of_day..end_date.end_of_day)
                 .order("#{sort_column} #{sort_direction}")
                 .paginate(page: params[:page] || 1, per_page: params[:limit] || 10)
 
-    # Render the growths with pagination metadata
     render json: {
       total_pages: @growths.total_pages,
       previous_page: @growths.previous_page,
@@ -31,6 +28,22 @@ class GrowthsController < ApplicationController
     }, scope: {
       params: params
     }
+  end
+
+  # GET /growths/user/:user_id
+  def user_growths
+    user_id = params[:user_id] # Get the user_id from the URL
+
+    @growths = Growth.where(user_id: user_id)
+
+    if @growths.exists?
+      render json: ActiveModelSerializers::SerializableResource.new(
+        @growths,
+        each_serializer: GrowthSerializer
+      )
+    else
+      render json: { message: "No growth records found for the user." }, status: :not_found
+    end
   end
 
   # GET /growths/1 or /growths/1.json

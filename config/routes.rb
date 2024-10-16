@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   get "/all-projects", to: "projects#all"
   post '/stk_push', to: 'payments#stk_push'
+  get 'growths/user/:user_id', to: 'growths#user_growths'
   get '/projects/:project_id/appointments', to: 'appointments#index'  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -1,6 +1,6 @@
 # Use specific version of Dockerfile syntax
 # Adjust RUBY_VERSION to match your project's .ruby-version and Gemfile
-ARG RUBY_VERSION=3.0.2
+ARG RUBY_VERSION=3.2.2
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
 # Set working directory for Rails app
